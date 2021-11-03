@@ -27,7 +27,7 @@ if (currentTheme) {
         checkbox.checked = true;
     }
 }
-navPeriod.addEventListener("click", () => {
+navPeriod === null || navPeriod === void 0 ? void 0 : navPeriod.addEventListener("click", () => {
     if (navDropdown.style.visibility === "visible") {
         navDropdown.style.visibility = "hidden";
         return;
@@ -43,14 +43,14 @@ navDropdown.addEventListener("click", (e) => {
 items.forEach((item) => {
     item.addEventListener("click", () => {
         document.body.style.overflow = "hidden";
-        modalBackground.classList.add("show");
-        modalWrapper.classList.add("show");
+        modalBackground === null || modalBackground === void 0 ? void 0 : modalBackground.classList.add("show");
+        modalWrapper === null || modalWrapper === void 0 ? void 0 : modalWrapper.classList.add("show");
         const clone = item.cloneNode(true);
-        modalContent.appendChild(clone);
-        closeBtn.addEventListener("click", () => {
+        modalContent === null || modalContent === void 0 ? void 0 : modalContent.appendChild(clone);
+        closeBtn === null || closeBtn === void 0 ? void 0 : closeBtn.addEventListener("click", () => {
             document.body.style.overflow = "scroll";
-            modalBackground.classList.remove("show");
-            modalWrapper.classList.remove("show");
+            modalBackground === null || modalBackground === void 0 ? void 0 : modalBackground.classList.remove("show");
+            modalWrapper === null || modalWrapper === void 0 ? void 0 : modalWrapper.classList.remove("show");
             clone.remove();
         });
     });

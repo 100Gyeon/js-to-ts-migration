@@ -1,11 +1,11 @@
 "use strict";
 
 const tagInput = document.querySelector(".tag-input") as HTMLInputElement;
-const set = new Set();
+const set: Set<string> = new Set();
 
-tagInput.addEventListener("keyup", (e: KeyboardEvent) => {
+tagInput.addEventListener("keyup", (e) => {
   const target = e.target as HTMLInputElement;
-  const targetValue: string = target.value;
+  const targetValue = target.value;
   if (e.key === "Enter") {
     if (!targetValue || set.has(targetValue)) {
       target.value = "";
@@ -24,7 +24,7 @@ const addTag = (text: string): void => {
   document.body.insertBefore(span, tagInput);
   tagInput.value = "";
 
-  span.addEventListener("click", (e: MouseEvent) => {
+  span.addEventListener("click", (e) => {
     const target = e.target as HTMLSpanElement;
     set.delete(target.innerText);
     span.remove();
