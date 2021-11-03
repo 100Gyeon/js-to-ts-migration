@@ -1,0 +1,27 @@
+* {
+  box-sizing: border-box;
+}
+
+body {
+  padding: 1rem;
+  display: flex;
+  flex-wrap: wrap;
+}
+
+.tag-input {
+  border: none;
+  outline: none;
+  background: none;
+  margin: 0.5rem;
+  font-size: 1.2rem;
+}
+
+.tag-span {
+  background-color: rgb(241, 243, 245);
+  color: rgb(12, 166, 120);
+  border-radius: 1rem;
+  margin: 0.5rem;
+  padding: 0.2rem 1rem;
+  font-size: 1.2rem;
+  cursor: pointer;
+}
