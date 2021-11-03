@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>To Do List</title>
+  <link rel="stylesheet" href="style.css" />
+  <script type="module" src="dist/main.js" defer></script>
+</head>
+<body>
+  <header class="header">
+    <h1 class="header__logo">To Do List</h1>
+  </header>
+  <nav class="options">
+    <button class="options__today">오늘만 보기</button>
+    <button class="options__tomorrow">내일만 보기</button>
+    <button class="options__both">함께 보기</button>
+  </nav>
+  <main class="todos">
+    <section class="todos__today open">
+      <div class="todos__info">
+        <span class="todos__date"></span>
+        <span class="todos__done">Check : 0 / 0</span>
+      </div>
+      <h2 class="todos__header">오늘 할 일</h2>
+      <ul class="todos__items"></ul>
+      <input type="text" class="todos__input" placeholder="오늘 할 일을 작성해 주세요.">
+      <div class="todos__btn-wrapper">
+        <button class="todos__add">+</button>
+      </div>
+    </section>
+    <section class="todos__tomorrow open">
+      <div class="todos__info">
+        <span class="todos__date"></span>
+        <span class="todos__done">Check : 0 / 0</span>
+      </div>
+      <h2 class="todos__header">내일 할 일</h2>
+      <ul class="todos__items"></ul>
+      <input type="text" class="todos__input" placeholder="내일 할 일을 작성해 주세요.">
+      <div class="todos__btn-wrapper">
+        <button class="todos__add">+</button>
+      </div>
+    </section>
+  </main>
+  <footer class="footer">SOPT 29th WEB Part</footer>
+</body>
+</html>
