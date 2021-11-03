@@ -1,6 +1,6 @@
 "use strict";
 const dates = document.querySelectorAll(".todos__date");
-const inputs = document.querySelectorAll(".todos__input");
+const inputs = Array.from(document.querySelectorAll(".todos__input"));
 const addBtns = document.querySelectorAll(".todos__add");
 const allItems = document.querySelectorAll(".todos__items");
 const nav = document.querySelector(".options");
@@ -34,14 +34,16 @@ inputs.forEach((input, index) => input.addEventListener("keyup", (event) => {
     }
 }));
 const countCheckbox = () => {
-    const checkTodayArr = Array.from(document.querySelectorAll(".todos__today .todos__check")).filter((box) => box.checked);
+    const checkTodayArr = Array.from(document.querySelectorAll(".todos__today .todos__check"));
+    const filteredTodayArr = checkTodayArr.filter((box) => box.checked);
     const totalTodayArr = Array.from(document.querySelectorAll(".todos__today .todos__check"));
-    const checkTomorrowArr = Array.from(document.querySelectorAll(".todos__tomorrow .todos__check")).filter((box) => box.checked);
+    const checkTomorrowArr = Array.from(document.querySelectorAll(".todos__tomorrow .todos__check"));
+    const filteredTomorrowArr = checkTomorrowArr.filter((box) => box.checked);
     const totalTomorrowArr = Array.from(document.querySelectorAll(".todos__tomorrow .todos__check"));
     const todayDone = document.querySelector(".todos__today .todos__done");
     const tomorrowDone = document.querySelector(".todos__tomorrow .todos__done");
-    todayDone.innerText = `Check : ${checkTodayArr.length} / ${totalTodayArr.length}`;
-    tomorrowDone.innerText = `Check : ${checkTomorrowArr.length} / ${totalTomorrowArr.length}`;
+    todayDone.innerText = `Check : ${filteredTodayArr.length} / ${totalTodayArr.length}`;
+    tomorrowDone.innerText = `Check : ${filteredTomorrowArr.length} / ${totalTomorrowArr.length}`;
 };
 const onAdd = (index) => {
     const todoInput = inputs[index];
@@ -88,7 +90,7 @@ const onAdd = (index) => {
     });
     countCheckbox();
 };
-nav.addEventListener("click", (event) => {
+nav === null || nav === void 0 ? void 0 : nav.addEventListener("click", (event) => {
     const target = event.target;
     if (target.className.includes("options__today")) {
         todos[0].classList.add("open");
