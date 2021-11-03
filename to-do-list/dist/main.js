@@ -39,8 +39,8 @@ const countCheckbox = () => {
     const checkTomorrowArr = Array.from(document.querySelectorAll(".todos__tomorrow .todos__check")).filter((box) => box.checked);
     const totalTomorrowArr = Array.from(document.querySelectorAll(".todos__tomorrow .todos__check"));
     const todayDone = document.querySelector(".todos__today .todos__done");
-    todayDone.innerText = `Check : ${checkTodayArr.length} / ${totalTodayArr.length}`;
     const tomorrowDone = document.querySelector(".todos__tomorrow .todos__done");
+    todayDone.innerText = `Check : ${checkTodayArr.length} / ${totalTodayArr.length}`;
     tomorrowDone.innerText = `Check : ${checkTomorrowArr.length} / ${totalTomorrowArr.length}`;
 };
 const onAdd = (index) => {

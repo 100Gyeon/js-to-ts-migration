@@ -108,7 +108,7 @@ const onAdd = (index: number): void => {
   todoInput.value = "";
 
   checkbox.addEventListener("change", (event) => {
-    const checkTarget = event.target as HTMLInputElement;
+    const checkTarget: HTMLInputElement = event.target as HTMLInputElement;
     // 체크된 항목만 글자 색상 바꾸고 줄 긋기
     if (checkTarget.checked) {
       span.style.textDecoration = "line-through";
