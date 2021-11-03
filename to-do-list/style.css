@@ -1,0 +1,204 @@
+@font-face {
+  font-family: "NanumBarunpen";
+  src: url("https://cdn.jsdelivr.net/gh/projectnoonnu/noonfonts_two@1.0/NanumBarunpen.woff")
+    format("woff");
+  font-weight: normal;
+  font-style: normal;
+}
+
+* {
+  box-sizing: border-box;
+  font-family: "NanumBarunpen";
+}
+
+body {
+  margin: 0;
+  height: 100vh;
+  display: flex;
+  flex-direction: column;
+}
+
+h1 {
+  margin: 0;
+}
+
+button {
+  cursor: pointer;
+  border: 0;
+  outline: 0;
+}
+
+ul {
+  margin: 0;
+  padding: 0;
+}
+
+li {
+  list-style: none;
+}
+
+.header {
+  height: 50px;
+  font-size: 32px;
+  color: white;
+  background-color: thistle;
+}
+
+.header__logo {
+  font-size: 32px;
+  text-align: center;
+  text-shadow: 2px 2px 1px black;
+  height: 50px;
+  line-height: 50px;
+}
+
+.options {
+  text-align: center;
+  margin: 10px 0;
+}
+
+.options button {
+  background-color: lavender;
+  border: 0;
+  border-radius: 10px;
+  padding: 2px 10px;
+  margin: 0 8px;
+  font-size: 0.9rem;
+}
+
+.options button:hover,
+.options button:focus {
+  font-weight: 900;
+  box-shadow: 1px 1px 2px;
+}
+
+.todos {
+  background-color: whitesmoke;
+  display: flex;
+  flex-grow: 1;
+}
+
+.todos__today,
+.todos__tomorrow {
+  border-right: 1px solid lightgray;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  width: 0;
+  visibility: hidden;
+  transition: width 300ms ease;
+}
+
+.todos__today.open,
+.todos__tomorrow.open {
+  width: 100%;
+  visibility: visible;
+}
+
+.todos__info {
+  display: flex;
+  justify-content: space-between;
+  align-items: baseline;
+  width: calc(100% - 60px);
+}
+
+.todos__date,
+.todos__done {
+  font-size: 1rem;
+  margin: 0.8rem 0;
+  color: #bb71c7;
+}
+
+.todos__header {
+  margin-block-start: 0;
+  margin-block-end: 0;
+}
+
+.todos__items {
+  flex-grow: 1;
+  width: 100%;
+  padding: 0 30px;
+  margin-top: 0.8rem;
+}
+
+.todos__item {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  border-bottom: 1px solid lightgray;
+}
+
+.todos__item--left {
+  display: flex;
+  align-items: center;
+}
+
+.todos__check {
+  display: none;
+}
+
+.todos__check + label {
+  cursor: pointer;
+  margin-right: 1rem;
+  width: 1.2rem;
+  height: 1.2rem;
+  background: url("img/blank.png") center center/100% no-repeat;
+  transition: background-image 300ms ease;
+}
+
+.todos__check:checked + label {
+  background-image: url("img/checkbox.png");
+}
+
+.todos__name {
+  font-size: 1.2rem;
+  line-height: 2.4rem;
+}
+
+.todos__delete {
+  width: 1.2rem;
+  height: 1.2rem;
+  background: transparent url("img/delete.png") center center/100% no-repeat;
+}
+
+.todos__input {
+  font-size: 1rem;
+  width: calc(100% - 60px);
+  outline: 0;
+  border: 0;
+  border-radius: 20px;
+  padding: 10px 20px;
+  margin-top: 0.8rem;
+}
+
+.todos__input:focus {
+  box-shadow: 2px 2px 10px lightgray;
+}
+
+.todos__btn-wrapper {
+  padding: 10px 0;
+}
+
+.todos__add {
+  padding: 0;
+  color: white;
+  background-color: black;
+  border-radius: 50%;
+  font-size: 2rem;
+  line-height: 2rem;
+  height: 2rem;
+  width: 2rem;
+}
+
+.todos__add:hover {
+  color: black;
+  background-color: thistle;
+}
+
+.footer {
+  color: white;
+  background-color: thistle;
+  height: 50px;
+  line-height: 50px;
+  text-align: center;
+}
