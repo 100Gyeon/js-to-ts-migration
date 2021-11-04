@@ -1,15 +1,26 @@
-"use strict";
-const checkbox = document.querySelector(".header__checkbox");
-const navPeriod = document.querySelector(".nav__period");
-const navDropdown = document.querySelector(".nav__dropdown");
-const navText = document.querySelector(".nav__text");
+export const $ = (query) => {
+    const $el = document.querySelector(query);
+    if (!$el) {
+        throw new Error(`querySelector ${query} failed!`);
+    }
+    if (!($el instanceof HTMLElement)) {
+        throw new Error(`${query} is not HTMLElement.`);
+    }
+    return $el;
+};
+const checkbox = $(".header__checkbox");
+const navPeriod = $(".nav__period");
+const navDropdown = $(".nav__dropdown");
+const navText = $(".nav__text");
 const items = document.querySelectorAll(".item");
-const modalBackground = document.querySelector(".modal__background");
-const modalWrapper = document.querySelector(".modal__wrapper");
-const modalContent = document.querySelector(".modal__content");
-const closeBtn = document.querySelector(".modal__close");
+const modalBackground = $(".modal__background");
+const modalWrapper = $(".modal__wrapper");
+const modalContent = $(".modal__content");
+const closeBtn = $(".modal__close");
 document.documentElement.setAttribute("color-theme", "light");
 checkbox.addEventListener("change", (e) => {
+    if (!(e.target instanceof HTMLInputElement))
+        throw new Error();
     const target = e.target;
     if (target.checked) {
         localStorage.setItem("color-theme", "dark");
@@ -24,10 +35,12 @@ const currentTheme = localStorage.getItem("color-theme");
 if (currentTheme) {
     document.documentElement.setAttribute("color-theme", currentTheme);
     if (currentTheme === "dark") {
+        if (!(checkbox instanceof HTMLInputElement))
+            throw new Error();
         checkbox.checked = true;
     }
 }
-navPeriod === null || navPeriod === void 0 ? void 0 : navPeriod.addEventListener("click", () => {
+navPeriod.addEventListener("click", () => {
     if (navDropdown.style.visibility === "visible") {
         navDropdown.style.visibility = "hidden";
         return;
@@ -35,6 +48,8 @@ navPeriod === null || navPeriod === void 0 ? void 0 : navPeriod.addEventListener
     navDropdown.style.visibility = "visible";
 });
 navDropdown.addEventListener("click", (e) => {
+    if (!(e.target instanceof HTMLElement))
+        throw new Error();
     const target = e.target;
     navText.innerText = target.innerText;
     Array.from(navDropdown.children).forEach((element) => element.classList.remove("active"));
@@ -43,14 +58,16 @@ navDropdown.addEventListener("click", (e) => {
 items.forEach((item) => {
     item.addEventListener("click", () => {
         document.body.style.overflow = "hidden";
-        modalBackground === null || modalBackground === void 0 ? void 0 : modalBackground.classList.add("show");
-        modalWrapper === null || modalWrapper === void 0 ? void 0 : modalWrapper.classList.add("show");
+        modalBackground.classList.add("show");
+        modalWrapper.classList.add("show");
         const clone = item.cloneNode(true);
-        modalContent === null || modalContent === void 0 ? void 0 : modalContent.appendChild(clone);
-        closeBtn === null || closeBtn === void 0 ? void 0 : closeBtn.addEventListener("click", () => {
+        if (!(clone instanceof Element))
+            throw new Error();
+        modalContent.appendChild(clone);
+        closeBtn.addEventListener("click", () => {
             document.body.style.overflow = "scroll";
-            modalBackground === null || modalBackground === void 0 ? void 0 : modalBackground.classList.remove("show");
-            modalWrapper === null || modalWrapper === void 0 ? void 0 : modalWrapper.classList.remove("show");
+            modalBackground.classList.remove("show");
+            modalWrapper.classList.remove("show");
             clone.remove();
         });
     });

@@ -1,25 +1,36 @@
-"use strict";
+export const $ = (query: string): HTMLElement => {
+  const $el = document.querySelector(query);
 
-const checkbox = document.querySelector(
-  ".header__checkbox"
-) as HTMLInputElement;
-const navPeriod = document.querySelector(".nav__period");
-const navDropdown = document.querySelector(
-  ".nav__dropdown"
-) as HTMLUListElement;
-const navText = document.querySelector(".nav__text") as HTMLSpanElement;
+  // null 제어
+  if (!$el) {
+    throw new Error(`querySelector ${query} failed!`);
+  }
+
+  // HTMLElement 제어
+  if (!($el instanceof HTMLElement)) {
+    throw new Error(`${query} is not HTMLElement.`);
+  }
+
+  return $el;
+};
+
+const checkbox = $(".header__checkbox");
+const navPeriod = $(".nav__period");
+const navDropdown = $(".nav__dropdown");
+const navText = $(".nav__text");
 const items = document.querySelectorAll(".item");
-const modalBackground = document.querySelector(".modal__background");
-const modalWrapper = document.querySelector(".modal__wrapper");
-const modalContent = document.querySelector(".modal__content");
-const closeBtn = document.querySelector(".modal__close");
+const modalBackground = $(".modal__background");
+const modalWrapper = $(".modal__wrapper");
+const modalContent = $(".modal__content");
+const closeBtn = $(".modal__close");
 
 // 다크모드 구현 (기본값을 light로 설정)
 document.documentElement.setAttribute("color-theme", "light");
 
 // 체크 여부에 따라 setItem으로 로컬 스토리지에 아이템 저장
 checkbox.addEventListener("change", (e) => {
-  const target = e.target as HTMLInputElement;
+  if (!(e.target instanceof HTMLInputElement)) throw new Error();
+  const target = e.target;
   if (target.checked) {
     localStorage.setItem("color-theme", "dark");
     document.documentElement.setAttribute("color-theme", "dark");
@@ -38,12 +49,13 @@ if (currentTheme) {
   document.documentElement.setAttribute("color-theme", currentTheme);
   // 다크모드면 checked 속성을 true로 설정
   if (currentTheme === "dark") {
+    if (!(checkbox instanceof HTMLInputElement)) throw new Error();
     checkbox.checked = true;
   }
 }
 
 // 커스텀 드롭다운 구현
-navPeriod?.addEventListener("click", () => {
+navPeriod.addEventListener("click", () => {
   if (navDropdown.style.visibility === "visible") {
     navDropdown.style.visibility = "hidden";
     return;
@@ -52,7 +64,8 @@ navPeriod?.addEventListener("click", () => {
 });
 
 navDropdown.addEventListener("click", (e) => {
-  const target = e.target as HTMLSpanElement;
+  if (!(e.target instanceof HTMLElement)) throw new Error();
+  const target = e.target;
   navText.innerText = target.innerText;
 
   Array.from(navDropdown.children).forEach((element) =>
@@ -66,16 +79,17 @@ items.forEach((item) => {
   item.addEventListener("click", () => {
     // body 스크롤 방지
     document.body.style.overflow = "hidden";
-    modalBackground?.classList.add("show");
-    modalWrapper?.classList.add("show");
+    modalBackground.classList.add("show");
+    modalWrapper.classList.add("show");
 
-    const clone = item.cloneNode(true) as Element;
-    modalContent?.appendChild(clone);
+    const clone = item.cloneNode(true);
+    if (!(clone instanceof Element)) throw new Error();
+    modalContent.appendChild(clone);
 
-    closeBtn?.addEventListener("click", () => {
+    closeBtn.addEventListener("click", () => {
       document.body.style.overflow = "scroll";
-      modalBackground?.classList.remove("show");
-      modalWrapper?.classList.remove("show");
+      modalBackground.classList.remove("show");
+      modalWrapper.classList.remove("show");
       clone.remove();
     });
   });
