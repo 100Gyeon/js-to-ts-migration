@@ -1,10 +1,23 @@
-"use strict";
+export const $ = (query: string): HTMLElement => {
+  const $el = document.querySelector(query);
 
-const tagInput = document.querySelector(".tag-input") as HTMLInputElement;
-const set: Set<string> = new Set();
+  if (!$el) {
+    throw new Error(`querySelector ${query} failed!`);
+  }
+
+  if (!($el instanceof HTMLElement)) {
+    throw new Error(`${query} is not HTMLElement.`);
+  }
+
+  return $el;
+};
+
+const tagInput = $(".tag-input");
+const set = new Set();
 
 tagInput.addEventListener("keyup", (e) => {
-  const target = e.target as HTMLInputElement;
+  if (!(e.target instanceof HTMLInputElement)) throw new Error();
+  const target = e.target;
   const targetValue = target.value;
   if (e.key === "Enter") {
     if (!targetValue || set.has(targetValue)) {
@@ -18,14 +31,16 @@ tagInput.addEventListener("keyup", (e) => {
 const addTag = (text: string): void => {
   set.add(text);
 
-  const span: HTMLSpanElement = document.createElement("span");
+  const span = document.createElement("span");
   span.setAttribute("class", "tag-span");
   span.innerText = text;
   document.body.insertBefore(span, tagInput);
+  if (!(tagInput instanceof HTMLInputElement)) throw new Error();
   tagInput.value = "";
 
   span.addEventListener("click", (e) => {
-    const target = e.target as HTMLSpanElement;
+    if (!(e.target instanceof HTMLSpanElement)) throw new Error();
+    const target = e.target;
     set.delete(target.innerText);
     span.remove();
   });
