@@ -87,6 +87,7 @@ li {
   width: 0;
   visibility: hidden;
   transition: width 300ms ease;
+  overflow-x: hidden;
 }
 
 .todos__today.open,
@@ -128,11 +129,6 @@ li {
   border-bottom: 1px solid lightgray;
 }
 
-.todos__item--left {
-  display: flex;
-  align-items: center;
-}
-
 .todos__check {
   display: none;
 }
@@ -153,6 +149,7 @@ li {
 .todos__name {
   font-size: 1.2rem;
   line-height: 2.4rem;
+  flex-grow: 1;
 }
 
 .todos__delete {
