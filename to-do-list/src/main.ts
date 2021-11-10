@@ -1,4 +1,18 @@
-"use strict";
+export const $ = (query: string): HTMLElement => {
+  const $el = document.querySelector(query);
+
+  // null 제어
+  if (!$el) {
+    throw new Error(`querySelector ${query} failed!`);
+  }
+
+  // HTMLElement 제어
+  if (!($el instanceof HTMLElement)) {
+    throw new Error(`${query} is not HTMLElement.`);
+  }
+
+  return $el;
+};
 
 const dates = document.querySelectorAll(".todos__date");
 const inputs = Array.from(
@@ -6,7 +20,7 @@ const inputs = Array.from(
 ) as HTMLInputElement[];
 const addBtns = document.querySelectorAll(".todos__add");
 const allItems = document.querySelectorAll(".todos__items");
-const nav = document.querySelector(".options");
+const nav = $(".options");
 const todos = document.querySelectorAll(".todos > section");
 let i = 0;
 
@@ -28,8 +42,10 @@ const findDate = (str: string): string => {
   const when = str === "today" ? todayStr : tomorrowStr;
   return when;
 };
-const todayDate = dates[0] as HTMLSpanElement;
-const tomorrowDate = dates[1] as HTMLSpanElement;
+if (!(dates[0] instanceof HTMLSpanElement)) throw new Error();
+const todayDate = dates[0];
+if (!(dates[1] instanceof HTMLSpanElement)) throw new Error();
+const tomorrowDate = dates[1];
 todayDate.innerText = findDate("today");
 tomorrowDate.innerText = findDate("tomorrow");
 
@@ -66,29 +82,24 @@ const countCheckbox = () => {
     document.querySelectorAll(".todos__tomorrow .todos__check")
   );
 
-  const todayDone = document.querySelector(
-    ".todos__today .todos__done"
-  ) as HTMLSpanElement;
-  const tomorrowDone = document.querySelector(
-    ".todos__tomorrow .todos__done"
-  ) as HTMLSpanElement;
+  const todayDone = $(".todos__today .todos__done");
+  const tomorrowDone = $(".todos__tomorrow .todos__done");
   todayDone.innerText = `Check : ${filteredTodayArr.length} / ${totalTodayArr.length}`;
   tomorrowDone.innerText = `Check : ${filteredTomorrowArr.length} / ${totalTomorrowArr.length}`;
 };
 
 // 동적으로 태그 삽입하고 삭제하기
 const onAdd = (index: number): void => {
-  const todoInput = inputs[index] as HTMLInputElement;
+  if (!(inputs[index] instanceof HTMLInputElement)) throw new Error();
+  const todoInput = inputs[index];
   if (!todoInput.value) return;
 
-  const div = document.createElement("div");
   const checkbox = document.createElement("input");
   const label = document.createElement("label");
   const li = document.createElement("li");
   const span = document.createElement("span");
   const deleteBtn = document.createElement("button");
 
-  div.setAttribute("class", "todos__item--left");
   checkbox.setAttribute("class", "todos__check");
   checkbox.setAttribute("type", "checkbox");
   checkbox.setAttribute("id", "check" + i);
@@ -100,17 +111,17 @@ const onAdd = (index: number): void => {
   span.innerText = todoInput.value;
 
   allItems[index].appendChild(li);
-  div.appendChild(checkbox);
-  div.appendChild(label);
-  div.appendChild(span);
-  li.appendChild(div);
+  li.appendChild(checkbox);
+  li.appendChild(label);
+  li.appendChild(span);
   li.appendChild(deleteBtn);
 
   i++;
   todoInput.value = "";
 
   checkbox.addEventListener("change", (event) => {
-    const checkTarget = event.target as HTMLInputElement;
+    if (!(event.target instanceof HTMLInputElement)) throw new Error();
+    const checkTarget = event.target;
     // 체크된 항목만 글자 색상 바꾸고 줄 긋기
     if (checkTarget.checked) {
       span.style.textDecoration = "line-through";
@@ -132,8 +143,9 @@ const onAdd = (index: number): void => {
 };
 
 // 오늘만 보기, 내일만 보기, 모두 보기 기능
-nav?.addEventListener("click", (event) => {
-  const target = event.target as HTMLElement;
+nav.addEventListener("click", (event) => {
+  if (!(event.target instanceof HTMLElement)) throw new Error();
+  const target = event.target;
   if (target.className.includes("options__today")) {
     todos[0].classList.add("open");
     todos[1].classList.remove("open");

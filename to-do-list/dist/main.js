@@ -1,9 +1,18 @@
-"use strict";
+export const $ = (query) => {
+    const $el = document.querySelector(query);
+    if (!$el) {
+        throw new Error(`querySelector ${query} failed!`);
+    }
+    if (!($el instanceof HTMLElement)) {
+        throw new Error(`${query} is not HTMLElement.`);
+    }
+    return $el;
+};
 const dates = document.querySelectorAll(".todos__date");
 const inputs = Array.from(document.querySelectorAll(".todos__input"));
 const addBtns = document.querySelectorAll(".todos__add");
 const allItems = document.querySelectorAll(".todos__items");
-const nav = document.querySelector(".options");
+const nav = $(".options");
 const todos = document.querySelectorAll(".todos > section");
 let i = 0;
 const findDate = (str) => {
@@ -21,7 +30,11 @@ const findDate = (str) => {
     const when = str === "today" ? todayStr : tomorrowStr;
     return when;
 };
+if (!(dates[0] instanceof HTMLSpanElement))
+    throw new Error();
 const todayDate = dates[0];
+if (!(dates[1] instanceof HTMLSpanElement))
+    throw new Error();
 const tomorrowDate = dates[1];
 todayDate.innerText = findDate("today");
 tomorrowDate.innerText = findDate("tomorrow");
@@ -40,22 +53,22 @@ const countCheckbox = () => {
     const checkTomorrowArr = Array.from(document.querySelectorAll(".todos__tomorrow .todos__check"));
     const filteredTomorrowArr = checkTomorrowArr.filter((box) => box.checked);
     const totalTomorrowArr = Array.from(document.querySelectorAll(".todos__tomorrow .todos__check"));
-    const todayDone = document.querySelector(".todos__today .todos__done");
-    const tomorrowDone = document.querySelector(".todos__tomorrow .todos__done");
+    const todayDone = $(".todos__today .todos__done");
+    const tomorrowDone = $(".todos__tomorrow .todos__done");
     todayDone.innerText = `Check : ${filteredTodayArr.length} / ${totalTodayArr.length}`;
     tomorrowDone.innerText = `Check : ${filteredTomorrowArr.length} / ${totalTomorrowArr.length}`;
 };
 const onAdd = (index) => {
+    if (!(inputs[index] instanceof HTMLInputElement))
+        throw new Error();
     const todoInput = inputs[index];
     if (!todoInput.value)
         return;
-    const div = document.createElement("div");
     const checkbox = document.createElement("input");
     const label = document.createElement("label");
     const li = document.createElement("li");
     const span = document.createElement("span");
     const deleteBtn = document.createElement("button");
-    div.setAttribute("class", "todos__item--left");
     checkbox.setAttribute("class", "todos__check");
     checkbox.setAttribute("type", "checkbox");
     checkbox.setAttribute("id", "check" + i);
@@ -65,14 +78,15 @@ const onAdd = (index) => {
     deleteBtn.setAttribute("class", "todos__delete");
     span.innerText = todoInput.value;
     allItems[index].appendChild(li);
-    div.appendChild(checkbox);
-    div.appendChild(label);
-    div.appendChild(span);
-    li.appendChild(div);
+    li.appendChild(checkbox);
+    li.appendChild(label);
+    li.appendChild(span);
     li.appendChild(deleteBtn);
     i++;
     todoInput.value = "";
     checkbox.addEventListener("change", (event) => {
+        if (!(event.target instanceof HTMLInputElement))
+            throw new Error();
         const checkTarget = event.target;
         if (checkTarget.checked) {
             span.style.textDecoration = "line-through";
@@ -90,7 +104,9 @@ const onAdd = (index) => {
     });
     countCheckbox();
 };
-nav === null || nav === void 0 ? void 0 : nav.addEventListener("click", (event) => {
+nav.addEventListener("click", (event) => {
+    if (!(event.target instanceof HTMLElement))
+        throw new Error();
     const target = event.target;
     if (target.className.includes("options__today")) {
         todos[0].classList.add("open");
