@@ -1,11 +1,11 @@
 import React from 'react';
 import styled from 'styled-components';
 import profileImg from 'assets/images/profile.png';
-import { ReactComponent as GithubIcon } from '../../assets/icons/github.svg';
-import { ReactComponent as TwitterIcon } from '../../assets/icons/twitter.svg';
-import { ReactComponent as FacebookIcon } from '../../assets/icons/facebook.svg';
-import { ReactComponent as HomeIcon } from '../../assets/icons/home.svg';
-import { ReactComponent as MailIcon } from '../../assets/icons/mail.svg';
+import { ReactComponent as GithubIcon } from 'assets/icons/github.svg';
+import { ReactComponent as TwitterIcon } from 'assets/icons/twitter.svg';
+import { ReactComponent as FacebookIcon } from 'assets/icons/facebook.svg';
+import { ReactComponent as HomeIcon } from 'assets/icons/home.svg';
+import { ReactComponent as MailIcon } from 'assets/icons/mail.svg';
 
 const Profile = () => {
   return (
