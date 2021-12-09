@@ -1,9 +1,13 @@
 import React from 'react';
 import styled from 'styled-components';
-import { ReactComponent as ArrowIcon } from '../../assets/icons/arrow.svg';
+import { ReactComponent as ArrowIcon } from 'assets/icons/arrow.svg';
 import { useNavigate } from 'react-router-dom';
 
-const ArticleFooter = ({ setIsModalOpen }) => {
+interface FooterProps {
+  setIsModalOpen: React.Dispatch<React.SetStateAction<boolean>>;
+}
+
+const ArticleFooter = ({ setIsModalOpen }: FooterProps) => {
   const navigate = useNavigate();
 
   return (
@@ -33,7 +37,6 @@ const StyledFooter = styled.div`
   margin-top: 1rem;
   width: 100%;
   box-shadow: 0px -3px 3px rgb(0 0 0 / 10%);
-
   & button {
     border-radius: 4px;
     padding: 0 1.25rem;

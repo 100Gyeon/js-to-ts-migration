@@ -1,16 +1,17 @@
 import React from 'react';
 import styled from 'styled-components';
+import { dataHandlerType } from './types';
 
-const ArticleBody = ({ setArticleData }) => {
-  const handleChange = (e) => {
-    setArticleData((articleData) => ({
-      ...articleData,
-      body: e.target.value,
-    }));
-  };
+interface BodyProps {
+  body: string;
+  onDataChange: dataHandlerType;
+}
+
+const ArticleBody = ({ body, onDataChange }: BodyProps) => {
   return (
     <StyledBody
-      onChange={handleChange}
+      value={body}
+      onChange={(e) => onDataChange('body', e.target.value)}
       placeholder="당신의 이야기를 적어주세요."
     ></StyledBody>
   );

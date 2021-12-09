@@ -1,14 +1,35 @@
 import React, { useState } from 'react';
 import styled from 'styled-components';
-import { client } from 'libs/api';
-import { useNavigate } from 'react-router-dom';
+import { imageClient } from 'libs/api';
+import { ReactComponent as DefaultThumbnail } from 'assets/icons/thumbnail.svg';
+import { dataHandlerType } from './types';
 
-const ArticleModal = ({ articleData, setArticleData, setIsModalOpen }) => {
-  // 150자 체크
-  const [count, setCount] = useState(0);
-  const [color, setColor] = useState('rgb(134, 142, 150)');
+interface ModalProps {
+  title: string;
+  summary: string;
+  thumbnail: string;
+  setIsModalOpen: React.Dispatch<React.SetStateAction<boolean>>;
+  onDataChange: dataHandlerType;
+  createArticle: () => Promise<void>;
+}
+
+const ArticleModal = ({
+  title,
+  summary,
+  thumbnail,
+  setIsModalOpen,
+  onDataChange,
+  createArticle,
+}: ModalProps) => {
   const maxLength = 150;
-  const handleChange = (e) => {
+  const [count, setCount] = useState(summary.length);
+  const [color, setColor] = useState(
+    count < maxLength ? 'rgb(134, 142, 150)' : 'rgb(250, 82, 82)',
+  );
+  const [previewImage, setPreviewImage] = useState(<DefaultThumbnail />);
+
+  // 150자 체크
+  const handleChange = (e: React.ChangeEvent<HTMLTextAreaElement>) => {
     const previewContent = e.target.value;
     const lengthCheckRegEx = new RegExp('^.{' + maxLength + ',}$');
     if (lengthCheckRegEx.test(previewContent)) {
@@ -20,28 +41,23 @@ const ArticleModal = ({ articleData, setArticleData, setIsModalOpen }) => {
       ? setColor('rgb(250, 82, 82)')
       : setColor('rgb(134, 142, 150)');
 
-    setArticleData((articleData) => ({
-      ...articleData,
-      summary: e.target.value,
-    }));
+    onDataChange('summary', e.target.value);
   };
 
-  const navigate = useNavigate();
-  const createArticle = async () => {
-    const { data } = await client.get('article');
-    const id = data.length + 1;
-    const now = new Date();
-    const date = `${now.getFullYear()}년 ${
-      now.getMonth() + 1
-    }월 ${now.getDate()}일`;
-    await client.post('/article', {
-      ...articleData,
-      id,
-      date,
-    });
-    // 모달창 닫고 메인 화면으로 이동
-    setIsModalOpen(false);
-    navigate('/');
+  // 이미지 업로드 구현
+  const handleImageChange = async (e: React.ChangeEvent<HTMLInputElement>) => {
+    const formData = new FormData();
+    if (e.target.files === null) return;
+    const imageFile = e.target.files[0];
+    formData.append('file', imageFile);
+
+    // 서버에 이미지 보내고(post), 정제된 이미지 url 받아오기
+    const imageResponse = await imageClient.post('', formData); // baseURL 수정할 게 없으니까 비워둠 (api.js 참고)
+    const imageUrl = imageResponse.data.url; // 이 url을 articleData의 thumbnail에 넣어서 post
+    onDataChange('thumbnail', imageUrl);
+
+    // 썸네일 바꾸기
+    imageUrl && setPreviewImage(imageUrl);
   };
 
   return (
@@ -51,11 +67,13 @@ const ArticleModal = ({ articleData, setArticleData, setIsModalOpen }) => {
         <StyledLeft>
           <h3>포스트 미리보기</h3>
           <StyledImgInput>
+            {thumbnail ? <img src={thumbnail} alt="썸네일" /> : previewImage}
             <label htmlFor="thumbnail">썸네일 업로드</label>
-            <input type="file" id="thumbnail" />
+            <input type="file" id="thumbnail" onChange={handleImageChange} />
           </StyledImgInput>
-          <h4>{articleData.title}</h4>
+          <h4>{title}</h4>
           <textarea
+            value={summary}
             onChange={handleChange}
             placeholder="당신의 포스트를 짧게 소개해 보세요."
           ></textarea>
@@ -136,13 +154,22 @@ const StyledLeft = styled.div`
 
 const StyledImgInput = styled.div`
   display: flex;
+  flex-direction: column;
   justify-content: center;
   align-items: center;
   background: rgb(233, 236, 239);
+  padding: 1rem;
+
+  & > img {
+    width: 100%;
+    height: 100%;
+    display: block;
+    object-fit: cover;
+  }
 
   & > label {
     cursor: pointer;
-    margin: 1rem 0;
+    margin-top: 1rem;
     padding: 0.25rem 2rem;
     border-radius: 4px;
     box-shadow: rgb(0 0 0 / 20%) 0px 0px 8px;

@@ -1,18 +1,19 @@
 import React from 'react';
 import styled from 'styled-components';
+import { dataHandlerType } from './types';
 
-const ArticleTitle = ({ setArticleData }) => {
-  const handleChange = (e) => {
-    setArticleData((articleData) => ({
-      ...articleData,
-      title: e.target.value,
-    }));
-  };
+interface TitleProps {
+  title: string;
+  onDataChange: dataHandlerType;
+}
+
+const ArticleTitle = ({ title, onDataChange }: TitleProps) => {
   return (
     <>
       <StyledTitle
+        value={title}
         placeholder="제목을 입력하세요."
-        onChange={handleChange}
+        onChange={(e) => onDataChange('title', e.target.value)}
       ></StyledTitle>
       <StyledBox />
     </>
