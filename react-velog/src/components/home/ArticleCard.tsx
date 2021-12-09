@@ -1,12 +1,25 @@
 import React from 'react';
+import { Link } from 'react-router-dom';
 import styled from 'styled-components';
+import ImgWrapper from 'components/common/ImgWrapper';
+import { ArticleResponse } from 'utils/article';
 
-const ArticleCard = ({ article }) => {
+interface CardProps {
+  article: ArticleResponse;
+}
+
+const ArticleCard = ({ article }: CardProps) => {
   const { title, summary, tags, thumbnail, date } = article;
   return (
     <StyledCard>
-      {thumbnail && <img src={thumbnail} alt="thumbnail" />}
-      <h3>{title}</h3>
+      <Link to={`article/${article.id}`} state={article}>
+        {thumbnail && (
+          <ImgWrapper ratio="56%">
+            {thumbnail && <img src={thumbnail} alt="thumbnail" />}
+          </ImgWrapper>
+        )}
+        <h3>{title}</h3>
+      </Link>
       <h4>{summary}</h4>
       <StyledTag>
         {tags.map((tag) => (
@@ -29,13 +42,11 @@ const StyledCard = styled.div`
   border-bottom: 1px solid rgb(233, 236, 239);
   margin: 0 auto;
 
-  & > img {
-    object-fit: cover;
-    height: 20rem;
-    margin-bottom: 1rem;
+  & > a {
+    text-decoration: none;
   }
 
-  & > h3 {
+  & > a > h3 {
     font-size: 1.5rem;
     font-weight: 600;
     color: rgb(33, 37, 41);
@@ -57,7 +68,7 @@ const StyledCard = styled.div`
   }
 `;
 
-const StyledTag = styled.div`
+export const StyledTag = styled.div`
   display: flex;
   margin-bottom: 1rem;
   & > span {

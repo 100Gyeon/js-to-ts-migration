@@ -6,7 +6,8 @@ const HomeNav = () => {
   const [line, setLine] = useState(true);
   const location = useLocation();
 
-  const handleClick = (e) => {
+  const handleClick = (e: React.MouseEvent<HTMLAnchorElement>) => {
+    if (!(e.target instanceof HTMLAnchorElement)) return;
     switch (e.target.id) {
       case 'articles':
         setLine(true);
@@ -46,7 +47,7 @@ const HomeNav = () => {
 
 export default HomeNav;
 
-const StyledNav = styled.div`
+const StyledNav = styled.div<{ line: boolean }>`
   margin-top: 3.5rem;
   margin-bottom: 3.5rem;
   display: flex;
