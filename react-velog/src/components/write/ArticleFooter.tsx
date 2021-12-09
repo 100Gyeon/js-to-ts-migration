@@ -1,14 +1,14 @@
 import React from 'react';
 import styled from 'styled-components';
 import { ReactComponent as ArrowIcon } from '../../assets/icons/arrow.svg';
-import { useHistory } from 'react-router-dom';
+import { useNavigate } from 'react-router-dom';
 
 const ArticleFooter = ({ setIsModalOpen }) => {
-  const history = useHistory();
+  const navigate = useNavigate();
 
   return (
     <StyledFooter>
-      <button onClick={() => history.goBack()}>
+      <button onClick={() => navigate(-1)}>
         <ArrowIcon />
         <span>나가기</span>
       </button>

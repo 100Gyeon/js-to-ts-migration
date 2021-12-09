@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import styled from 'styled-components';
 import { client } from 'libs/api';
-import { useHistory } from 'react-router-dom';
+import { useNavigate } from 'react-router-dom';
 
 const ArticleModal = ({ articleData, setArticleData, setIsModalOpen }) => {
   // 150자 체크
@@ -26,7 +26,7 @@ const ArticleModal = ({ articleData, setArticleData, setIsModalOpen }) => {
     }));
   };
 
-  const history = useHistory();
+  const navigate = useNavigate();
   const createArticle = async () => {
     const { data } = await client.get('article');
     const id = data.length + 1;
@@ -41,7 +41,7 @@ const ArticleModal = ({ articleData, setArticleData, setIsModalOpen }) => {
     });
     // 모달창 닫고 메인 화면으로 이동
     setIsModalOpen(false);
-    history.push('/');
+    navigate('/');
   };
 
   return (

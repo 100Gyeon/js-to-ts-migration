@@ -1,17 +1,22 @@
-import { BrowserRouter, Route, Switch } from 'react-router-dom';
+import { BrowserRouter, Routes, Route } from 'react-router-dom';
+import GlobalStyle from 'components/common/GlobalStyle';
 import Home from './pages/Home';
 import Write from './pages/Write';
-import './App.css';
+import ArticlesContainer from 'components/home/ArticlesContainer';
+import SeriesCategory from 'components/home/SeriesCategory';
 
 function App() {
   return (
     <>
+      <GlobalStyle />
       <BrowserRouter>
-        <Switch>
-          <Route exact path="/write" component={() => <Write />} />
-          <Route path="/" component={() => <Home />} />
-          <Route component={() => <div>Page Not Found</div>} />
-        </Switch>
+        <Routes>
+          <Route path="/write" element={<Write />} />
+          <Route path="/*" element={<Home />}>
+            <Route path="" element={<ArticlesContainer />} />
+            <Route path="series" element={<SeriesCategory />} />
+          </Route>
+        </Routes>
       </BrowserRouter>
     </>
   );
