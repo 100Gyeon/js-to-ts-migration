@@ -1,13 +1,18 @@
 import React from 'react';
 import styled from 'styled-components';
 
-const ImgWrapper = ({ ratio, children }) => {
+interface ImgWrapperProps {
+  ratio: string;
+  children: React.ReactNode;
+}
+
+const ImgWrapper = ({ ratio, children }: ImgWrapperProps) => {
   return <StyledImgWrapper ratio={ratio}>{children}</StyledImgWrapper>;
 };
 
 export default ImgWrapper;
 
-const StyledImgWrapper = styled.div`
+const StyledImgWrapper = styled.div<{ ratio: string }>`
   padding-top: ${({ ratio }) => ratio};
   position: relative;
   margin-bottom: 1rem;
