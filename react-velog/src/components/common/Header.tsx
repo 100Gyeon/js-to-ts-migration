@@ -1,15 +1,17 @@
 import React from 'react';
 import styled from 'styled-components';
 import { Link } from 'react-router-dom';
-import { ReactComponent as VelogIcon } from '../../assets/icons/velog.svg';
-import { ReactComponent as SearchIcon } from '../../assets/icons/search.svg';
-import { ReactComponent as MoreIcon } from '../../assets/icons/more.svg';
-import profileImg from '../../assets/images/profile.png';
+import { ReactComponent as VelogIcon } from 'assets/icons/velog.svg';
+import { ReactComponent as SearchIcon } from 'assets/icons/search.svg';
+import { ReactComponent as MoreIcon } from 'assets/icons/more.svg';
+import profileImg from 'assets/images/profile.png';
+import { useNavigate } from 'react-router-dom';
 
 const Header = () => {
+  const navigate = useNavigate();
   return (
     <StyledHeader>
-      <StyledLeft>
+      <StyledLeft onClick={() => navigate('/')}>
         <VelogIcon width="30" height="30" />
         <div>JiYeon.log</div>
       </StyledLeft>
@@ -38,6 +40,7 @@ const StyledHeader = styled.div`
 const StyledLeft = styled.div`
   display: flex;
   align-items: center;
+  cursor: pointer;
 
   & > div {
     margin-left: 1rem;
